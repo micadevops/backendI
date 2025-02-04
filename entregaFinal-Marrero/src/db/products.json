@@ -1,0 +1,62 @@
+[
+  {
+    "id": "2a1441a8-4064-44b5-a40e-a0495618d2ea",
+    "title": "PC",
+    "description": "Computer Intel i7 with 16 gb of RAM ",
+    "code": "ABC1234",
+    "price": "950",
+    "status": true,
+    "stock": 100,
+    "category": "IT"
+  },
+  {
+    "id": "8bec652b-6ae0-46ca-82c0-f9bfc72608e2",
+    "title": "Oven",
+    "description": "Perfect for baking cookies, roasting vegetables, broiling meats, warming up leftovers, and preparing a variety of casseroles",
+    "code": "ABC5678",
+    "price": "300",
+    "status": true,
+    "stock": 50,
+    "category": "Kitchen"
+  },
+  {
+    "id": "69686af6-56b7-433d-ae9b-bc34de031b81",
+    "title": "Coffee Maker",
+    "description": "Brews coffee quickly and efficiently, perfect for morning routines and coffee enthusiasts.",
+    "code": "XYZ1234",
+    "price": "120",
+    "status": true,
+    "stock": 30,
+    "category": "Appliances"
+  },
+  {
+    "id": "25aa98c8-d042-436a-a0b3-ade49e1afe9a",
+    "title": "Smartphone",
+    "description": "Latest model with a powerful camera, long battery life, and a sleek design.",
+    "code": "LMN6789",
+    "price": "800",
+    "status": true,
+    "stock": 100,
+    "category": "Electronics"
+  },
+  {
+    "id": "9bb25c8e-2a4c-4040-a17b-39c5edf833e1",
+    "title": "Office Chair",
+    "description": "Ergonomically designed for maximum comfort during long working hours.",
+    "code": "QRS4567",
+    "price": "150",
+    "status": true,
+    "stock": 40,
+    "category": "Furniture"
+  },
+  {
+    "id": "ae7d72b7-17e6-4a70-98c0-ff31ee70e399",
+    "title": "Microfono viejo",
+    "description": "Microfono de otra marca chau",
+    "code": "QRS4567",
+    "price": "150",
+    "status": true,
+    "stock": 40,
+    "category": "mica categoria"
+  }
+]
