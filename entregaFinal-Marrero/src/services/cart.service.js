@@ -1,8 +1,12 @@
 import { ProductService } from "./product.service.js";
-import { cartModel } from "../db/models/cartModel.js";
-class CartService {
+import { cartModel } from "../db/models/cart.model.js";
 
-    async getAllCarts() {
+export class CartService {
+    constructor() {
+        this.productService = new ProductService();
+    }
+    
+    async getAll() {
         try {
             const getAllCarts = await cartModel.find();
             return getAllCarts;
@@ -13,63 +17,65 @@ class CartService {
 
     }
 
-    async getById(cid) {
+    async getById(id) {
         try {
-            const cartById = await cartModel.findOne({_id: cid}).populate('products.product');
+            const cartById = await cartModel.findById(id).populate('products.product');
             
+            console.log (cartById)
             if (!cartById) {
-                throw new Error(`Cart with id: ${cid} not found`);
+                throw new Error(`Cart with id: ${id} not found`);
             }
-
+    
             return cartById;
         }
         catch (error) {
-            throw new Error('Error while fetching the cart by ID');
+            console.error(`Error fetching cart: ${error.message}`);
+            throw new Error(`Error while fetching the cart with ID: ${id}`);
         }
     }
 
     async create() {
         try {
             const newCart = await cartModel.create({products: []});
-            return newCart
+            return newCart.id
+            
         } catch (error) {
             console.error(`An error occurred while try to create a cart with error message: ${error.message}`);
         }
     }
 
-    async addProductToCart(cid, pid) {
-
+    async addProductToCart(id, pid) {
         try {
-            const productId = await productService.getById(pid);
-
+            const productId = await this.productService.getById(pid);
+    
             if(!productId) {
                 throw new Error(`Product with ID ${pid} not found`);
             }
-    
-            const cartId = await this.getById(cid);
+            
+            const cartId = await cartModel.findById(id)
     
             if(!cartId) {
-                throw new Error(`Cart with ID ${cid} not found`);
+                throw new Error(`Cart with ID ${id} not found`);
             }
-
+    
             if (productId.stock < 1) {
                 throw new Error(`Product ${pid} is out of stock`);
             }
-
-            const addProductByID = await cartModel.findOneAndUpdate(
-                {
-                    _id: cid,
-                    "products.product": pid,
-                    "products.quantity": { $lt: productId.stock }
+    
+            const cart = await cartModel.findOneAndUpdate(
+                { _id: id, 'products.product': pid },
+                { 
+                    $inc: { 'products.$.quantity': 1 } 
                 },
                 { 
-                    $inc: { "products.$.quantity": 1 }
-                },
-                { new: true }
-            )
-            if (!addProductByID) {
-                await cartModel.findByIdAndUpdate(
-                    cid,
+                    new: true,
+                    upsert: false 
+                }
+            );
+        
+            if (!cart) {
+                return await cartModel.findOneAndUpdate(
+                    { _id: id },
                     { 
                         $push: { 
                             products: { 
@@ -81,65 +87,64 @@ class CartService {
                     { new: true }
                 );
             }
-    
-            return await this.getById(cid);  
-            
-        } catch (error) {
-            console.error(`An error occurred while try to add the product: ${productId} to the cart: ${cartId} with error message: ${error.message}`);
+        
+            return cart;
+
+            } catch (error) {
+                console.error(`An error occurred while try to add the product: ${productId} to the cart: ${cartId} with error message: ${error.message}`);
+            }
         }
-    }
 
-    async deleteProductFromCart(cid, pid) {
+    async deleteProductFromCart(id, pid) {
         try {
-            const productId = await productService.getById(pid);
-
-            if(!productId) {
-                throw new Error(`Product with ID ${pid} not found`);
-            }
-    
-            const cartId = await this.getById(cid);
-            if(!cartId) {
-                throw new Error(`Cart with ID ${cid} not found`);
-            }
-    
-            const productIndex = cartId.products.findIndex(
-                item => item.product.toString() === pid
+            
+            const cart = await cartModel.findOneAndUpdate(
+                { _id: id, 'products.product': pid },
+                { 
+                    $inc: { 'products.$.quantity': -1 } 
+                },
+                { 
+                    new: true,
+                    upsert: false 
+                }
+            );
+            //TODO: revisar para que mande una alerta cunado ya no quedan mas productos, y no me deje seguir borrando
+            const updatedCart = await cartModel.findOneAndUpdate(
+                { _id: id },
+                { 
+                    $pull: { 
+                        products: { 
+                            product: pid, 
+                            quantity: 0 
+                        } 
+                    }
+                },
+                { new: true }
             );
     
-            if (productIndex === -1) {
-                return null;
-            }
-    
-            if (cartId.products[productIndex].quantity === 1) {
-                cartId.products.splice(productIndex, 1);
-            } else {
-                cartId.products[productIndex].quantity -= 1;
-            }
-    
-            await cartId.save();
-            return await this.getById(cid);  
-    
+            return updatedCart || cart;
+  
         } catch (error) {
+            console.error(`Error removing product from cart: ${error.message}`);
             throw error;
         }
     }
 
-    async deleteAllProductsFromCart(cid) {
+    async deleteAllProductsFromCart(id) {
         try {
-            const cartId = await this.getById(cid);
 
+            const cartId = await cartModel.findById(id)
+    
             if(!cartId) {
-                throw new Error(`Cart with ID ${cid} not found`);
+                throw new Error(`Cart with ID ${id} not found`);
             }
     
-            const result = await cartModel.updateOne({ _id: cid }, { products: [] });
+            const result = await cartModel.updateOne({ id }, { products: [] });
 
-            return await this.getById(cid);  
+            return await this.getById(id);  
     
         } catch (error) {
-            throw error;
+            console.error(`An error occurred while try to delete all the products to the cart: ${cartId} with error message: ${error.message}`);
         }
     }
 }
-
-export { CartService }

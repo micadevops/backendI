@@ -8,7 +8,11 @@ import { __dirname } from "./utils/path.js";
 import { Server } from "socket.io";
 import { cartRouter } from "./routes/carts.routes.js";
 import path from "path";
-import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
+import { allowInsecurePrototypeAccess } from '@handlebars/allow-prototype-access';
+import Handlebars from 'handlebars';
+import exphbs from 'express-handlebars';
+import dotenv from "dotenv";
+import mongoose from 'mongoose';
 
 dotenv.config();
 
