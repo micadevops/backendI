@@ -1,5 +1,5 @@
-<h1>HOME PAGE</h1>  
-{{!-- <form action="/" method="GET">
+<h1>HOME PAGE</h1>
+<form action="/" method="GET">
     <div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
         <!-- Input para 'limit' -->
         <div>
@@ -30,19 +30,16 @@
                 <option value="true" {{#if isTrue}}selected{{/if}}>True</option>
                 <option value="false" {{#if isFalse}}selected{{/if}}>False</option>
             </select>
-        
-        <div>
+
+        {{!-- <div>
             <button type="button" onclick="resetForm()">Restablecer valores</button>
-        </div>
-            <div>
-            <button type="button" onclick="resetForm()">Ir al carrito</button>
-        </div>
         <!-- Botón de aplicación -->
-        <div>
+        <div> --}}
             <button type="submit">Aplicar</button>
         </div>
     </div>
-</form> --}}
+</form>
+
 
 <div>
     <label for="carts">Carts:</label>
@@ -55,6 +52,7 @@
     <button id="go-to-cart" style="display: none; padding: 5px; margin-left: 5px;">Ir al carrito</button>
 
 </div>
+
 
 <table border="1">
     <thead>
@@ -138,13 +136,13 @@
     document.addEventListener('DOMContentLoaded', function() {
     const cartSelect = document.getElementById('carts');
     const goToCartButton = document.getElementById('go-to-cart');
-    goToCartButton.style.display = 'inline-block';  
-    
+    goToCartButton.style.display = 'inline-block';
+
     cartSelect.addEventListener('change', function() {
         const selectedCartId = this.value;
 
         if (selectedCartId) {
-            goToCartButton.dataset.cartId = selectedCartId; 
+            goToCartButton.dataset.cartId = selectedCartId;
         } else {
             goToCartButton.style.display = 'none';
         }
