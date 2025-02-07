@@ -8,6 +8,7 @@ export class CartService {
     
     async getAll() {
         try {
+            
             const getAllCarts = await cartModel.find();
             return getAllCarts;
         }

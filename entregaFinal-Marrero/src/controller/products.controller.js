@@ -10,7 +10,9 @@ export class ProductsController {
     getAll = async (req, res) => { 
           
         try {
-            const products = await this.productService.getAll();
+            const { limit, page, sort, query, stock} = req.query;
+
+            const products = await this.productService.getAll( limit, page, sort, query, stock);
         
             if (products.length === 0) {
                 return res.status(200).json({ message: "No product in the database" });

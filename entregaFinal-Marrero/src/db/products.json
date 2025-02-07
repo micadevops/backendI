@@ -1,56 +1,170 @@
 [
   {
-    "title": "PC",
-    "description": "Computer Intel i7 with 16 gb of RAM ",
-    "code": "ABC1234",
-    "price": "950",
-    "status": true,
-    "stock": 100,
-    "category": "IT"
+    "title": "4K UHD Projector",
+    "description": "High-definition 4K UHD projector with HDR support.",
+    "code": "PRJ2025",
+    "price": 800,
+    "stock": 4,
+    "category": "electronics"
   },
   {
-    "title": "Oven",
-    "description": "Perfect for baking cookies, roasting vegetables, broiling meats, warming up leftovers, and preparing a variety of casseroles",
-    "code": "ABC5678",
-    "price": "300",
-    "status": true,
-    "stock": 50,
-    "category": "Kitchen"
+    "title": "Gaming Laptop",
+    "description": "Powerful gaming laptop with dedicated GPU.",
+    "code": "GLT5678",
+    "price": 1500,
+    "stock": 2,
+    "category": "computers"
   },
   {
-    "title": "Coffee Maker",
-    "description": "Brews coffee quickly and efficiently, perfect for morning routines and coffee enthusiasts.",
-    "code": "XYZ1234",
-    "price": "120",
-    "status": true,
+    "title": "Soundbar",
+    "description": "Compact soundbar with deep bass and Bluetooth.",
+    "code": "SB1234",
+    "price": 120,
+    "stock": 8,
+    "category": "sound"
+  },
+  {
+    "title": "Smartphone Case",
+    "description": "Protective phone case for the latest models.",
+    "code": "PHNCASE5",
+    "price": 25,
     "stock": 30,
-    "category": "Appliances"
+    "category": "mobile"
   },
   {
-    "title": "Smartphone",
-    "description": "Latest model with a powerful camera, long battery life, and a sleek design.",
-    "code": "LMN6789",
-    "price": "800",
-    "status": true,
-    "stock": 100,
-    "category": "Electronics"
+    "title": "Wireless Earbuds",
+    "description": "True wireless earbuds with noise cancellation.",
+    "code": "WLEB3456",
+    "price": 120,
+    "stock": 10,
+    "category": "sound"
   },
   {
-    "title": "Office Chair",
-    "description": "Ergonomically designed for maximum comfort during long working hours.",
-    "code": "QRS4567",
-    "price": "150",
-    "status": true,
-    "stock": 40,
-    "category": "Furniture"
+    "title": "Portable Gaming Console",
+    "description": "Handheld gaming console with 1080p screen.",
+    "code": "PGC7654",
+    "price": 400,
+    "stock": 6,
+    "category": "gaming"
   },
   {
-    "title": "Microfono viejo",
-    "description": "Microfono de otra marca chau",
-    "code": "QRS4567",
-    "price": "150",
-    "status": true,
-    "stock": 40,  
-    "category": "mica categoria"
+    "title": "Ergonomic Chair",
+    "description": "Comfortable ergonomic chair for office use.",
+    "code": "CHIR8901",
+    "price": 250,
+    "stock": 5,
+    "category": "computers"
+  },
+  {
+    "title": "Laptop Stand",
+    "description": "Adjustable laptop stand for ergonomic use.",
+    "code": "LPS2345",
+    "price": 40,
+    "stock": 20,
+    "category": "computers"
+  },
+  {
+    "title": "Fitness Tracker",
+    "description": "Advanced fitness tracker with heart rate monitor.",
+    "code": "FITTRK5678",
+    "price": 100,
+    "stock": 12,
+    "category": "wearable"
+  },
+  {
+    "title": "Bluetooth Car Adapter",
+    "description": "Wireless Bluetooth adapter for car audio systems.",
+    "code": "CARAD5678",
+    "price": 35,
+    "stock": 15,
+    "category": "electronics"
+  },
+  {
+    "title": "Digital Camera",
+    "description": "High-resolution digital camera with 20MP lens.",
+    "code": "DGC2134",
+    "price": 500,
+    "stock": 4,
+    "category": "electronics"
+  },
+  {
+    "title": "External SSD",
+    "description": "1TB external SSD with fast read/write speeds.",
+    "code": "ESD2345",
+    "price": 180,
+    "stock": 10,
+    "category": "storage"
+  },
+  {
+    "title": "Smart Thermostat",
+    "description": "Wi-Fi enabled smart thermostat for home automation.",
+    "code": "THR1234",
+    "price": 150,
+    "stock": 6,
+    "category": "home automation"
+  },
+  {
+    "title": "Hair Straightener",
+    "description": "Ceramic hair straightener with adjustable heat.",
+    "code": "HS4567",
+    "price": 70,
+    "stock": 14,
+    "category": "personal care"
+  },
+  {
+    "title": "Cordless Drill",
+    "description": "High-power cordless drill with multiple attachments.",
+    "code": "CDR2345",
+    "price": 120,
+    "stock": 8,
+    "category": "home appliances"
+  },
+  {
+    "title": "Electric Kettle",
+    "description": "Fast boiling electric kettle with temperature control.",
+    "code": "EKET2345",
+    "price": 60,
+    "stock": 20,
+    "category": "home appliances"
+  },
+  {
+    "title": "Air Fryer",
+    "description": "Healthy cooking air fryer with multiple presets.",
+    "code": "AFRY5678",
+    "price": 150,
+    "stock": 5,
+    "category": "home appliances"
+  },
+  {
+    "title": "Smart Door Lock",
+    "description": "Keyless entry smart door lock with remote access.",
+    "code": "SDL1234",
+    "price": 180,
+    "stock": 3,
+    "category": "security"
+  },
+  {
+    "title": "Robot Vacuum",
+    "description": "Smart robot vacuum with app control and mapping.",
+    "code": "RVAC3456",
+    "price": 250,
+    "stock": 4,
+    "category": "home appliances"
+  },
+  {
+    "title": "Wireless Charging Pad",
+    "description": "Qi wireless charging pad for phones and devices.",
+    "code": "WCP2345",
+    "price": 40,
+    "stock": 15,
+    "category": "electronics"
+  },
+  {
+    "title": "Solar Powered Garden Lights",
+    "description": "Energy-efficient solar-powered lights for gardens.",
+    "code": "SGL9876",
+    "price": 30,
+    "stock": 25,
+    "category": "home automation"
   }
 ]
