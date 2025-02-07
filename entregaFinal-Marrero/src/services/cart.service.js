@@ -45,6 +45,39 @@ export class CartService {
         }
     }
 
+
+    async updateQuantityProduct(id, pid, quantity) {
+        try {
+            const cart = await cartModel.findById(id);
+            if (!cart) {
+                throw new Error(`Cart with ID ${id} not found`);
+            }
+    
+            const product = await this.productService.getById(pid);
+            if (!product) {
+                throw new Error(`Product with ID ${pid} not found`);
+            }
+    
+            const updatedCart = await cartModel.findOneAndUpdate(
+                { _id: id, "products.product": pid },
+                { $set: { "products.$.quantity": quantity } },
+                { new: true }
+            );
+    
+            if (!updatedCart) {
+                throw new Error(`Product with ID ${pid} is not in the cart`);
+            }
+    
+            return updatedCart;
+    
+        } catch (error) {
+            console.error(`An error occurred while updating product quantity: ${error.message}`);
+        }
+    }
+    
+
+    
+
     async addProductToCart(id, pid) {
         try {
             const productId = await this.productService.getById(pid);

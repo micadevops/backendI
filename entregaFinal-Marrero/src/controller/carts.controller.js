@@ -13,7 +13,7 @@ export class CartsController {
             const carts = await this.cartService.getAll();
        
             if (carts.length === 0) {
-                return res.status(200).json({ message: "No product in the database" });
+                return res.status(200).json({ message: "No carts active in the system" });
             }
            
             res.status(200).json(carts);
@@ -63,6 +63,29 @@ export class CartsController {
                 
             }
     }
+    updateQuantityProduct = async (req, res) => { 
+        try {
+            const { cid, pid } = req.params;
+            const { quantity } = req.body;
+    
+            const updatedCart = await this.cartService.updateQuantityProduct(cid, pid, quantity);
+    
+            if (!updatedCart) {
+                return res.status(404).json({ message: `Product with ID ${pid} not found in cart ${cid}.` });
+            }
+    
+            return res.status(200).json({
+                message: `Successfully updated quantity for product ${pid} in cart with ID: ${cid}.`,
+                cart: updatedCart
+            });
+    
+        } catch (error) {
+            return res.status(500).json({ 
+                message: `An error occurred while trying to update the quantity in the cart: ${error.message}` 
+            });
+        }
+    }
+    
 
     addProductToCart = async (req, res) => { 
         const { cid, pid } = req.params;
