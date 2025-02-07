@@ -22,7 +22,6 @@ export class CartService {
         try {
             const cartById = await cartModel.findById(id).populate('products.product');
             
-            console.log (cartById)
             if (!cartById) {
                 throw new Error(`Cart with id: ${id} not found`);
             }

@@ -1,24 +1,165 @@
-<h1>
-    HOME PAGE
-</h1>
+<h1>HOME PAGE</h1>  
+{{!-- <form action="/" method="GET">
+    <div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
+        <!-- Input para 'limit' -->
+        <div>
+            <label for="limit">Limit of products:</label>
+            <input type="number" name="limit" id="limit" value="{{limit}}">
+        </div>
 
-<ul class="collection">
-    <table>
+        <div>
+            <label for="query">Buscar por categoria:</label>
+            <input type="string" name="query" id="query" value="{{query}}">
+        </div>
+        <!-- Input para 'page' -->
+        <div>
+            <label for="page">Page:</label>
+            <input type="number" name="page" id="page" value="{{page}}">
+        </div>
+        <!-- Selector para 'sort' con estilos explícitos -->
+        <div>
+            <label for="sort">Ordenar por precio:</label>
+            <select name="sort" id="sort" style="display: inline-block; padding: 5px; margin-left: 5px;">
+                <option value="asc" {{#if isAsc}}selected{{/if}}>Ascendente</option>
+                <option value="desc" {{#if isDesc}}selected{{/if}}>Descendente</option>
+            </select>
+        </div>
+        <div>
+            <label for="stock">Stock:</label>
+            <select name="stock" id="stock" style="display: inline-block; padding: 5px; margin-left: 5px;">
+                <option value="true" {{#if isTrue}}selected{{/if}}>True</option>
+                <option value="false" {{#if isFalse}}selected{{/if}}>False</option>
+            </select>
+        
+        <div>
+            <button type="button" onclick="resetForm()">Restablecer valores</button>
+        </div>
+            <div>
+            <button type="button" onclick="resetForm()">Ir al carrito</button>
+        </div>
+        <!-- Botón de aplicación -->
+        <div>
+            <button type="submit">Aplicar</button>
+        </div>
+    </div>
+</form> --}}
+
+<div>
+    <label for="carts">Carts:</label>
+    <select id="carts" style="display: inline-block; padding: 5px; margin-left: 5px;">
+        <option value="">--Selecciona un carrito--</option>
+        {{#each carts}}
+            <option value="{{this._id}}">{{this._id}}</option>
+        {{/each}}
+    </select>
+    <button id="go-to-cart" style="display: none; padding: 5px; margin-left: 5px;">Ir al carrito</button>
+
+</div>
+
+<table border="1">
     <thead>
         <tr>
+            <th>id</th>
             <th>Product</th>
             <th>Description</th>
             <th>Price</th>
+            <th>Category</th>
+            <th>Stock</th>
+            <th>Acción</th>
         </tr>
     </thead>
     <tbody>
-        {{#each products}}
+        {{#each products.payload}}
         <tr>
+            <td>{{this._id}}</td>
             <td>{{this.title}}</td>
             <td>{{this.description}}</td>
             <td>{{this.price}}</td>
+            <td>{{this.category}}</td>
+            <td>{{this.stock}}</td>
+            <td>
+                <!-- Formulario para enviar el carrito y el producto -->
+                <form method="POST" class="add-to-cart-form">
+                    <input type="hidden" name="productId" value="{{this._id}}">
+                    <button type="submit" class="agregar-btn">Agregar al carrito</button>
+                </form>
+            </td>
+
         </tr>
         {{/each}}
     </tbody>
-    </table>
-</ul>
+</table>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const cartSelect = document.getElementById('carts');
+
+        document.querySelectorAll('.add-to-cart-form').forEach(function(form) {
+            form.addEventListener('submit', async function(event) {
+                event.preventDefault();
+
+                const selectedCartId = cartSelect.value;
+                if (!selectedCartId) {
+                    alert('¡Por favor, selecciona un carrito antes de agregar el producto!');
+                    return;
+                }
+
+                const productId = form.querySelector('input[name="productId"]').value;
+                const formAction = `/api/carts/${selectedCartId}/product/${productId}`;
+
+                console.log("Enviando solicitud a:", formAction);
+                console.log("Cart ID:", selectedCartId);
+                console.log("Product ID:", productId);
+
+                try {
+                    const response = await fetch(formAction, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ quantity: 1 }) // Puedes cambiar esto según tu API
+                    });
+
+                    if (response.ok) {
+                        alert(`El producto ${productId} fue agregado al carrito ${selectedCartId} con éxito!`);
+                    } else {
+                        alert('Hubo un error al agregar el producto. Inténtalo de nuevo.');
+                    }
+                } catch (error) {
+                    console.error("Error al enviar la solicitud:", error);
+                    alert('Error de conexión. Revisa tu conexión e intenta nuevamente.');
+                }
+            });
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+    const cartSelect = document.getElementById('carts');
+    const goToCartButton = document.getElementById('go-to-cart');
+    goToCartButton.style.display = 'inline-block';  
+    
+    cartSelect.addEventListener('change', function() {
+        const selectedCartId = this.value;
+
+        if (selectedCartId) {
+            goToCartButton.dataset.cartId = selectedCartId; 
+        } else {
+            goToCartButton.style.display = 'none';
+        }
+    });
+
+    goToCartButton.addEventListener('click', function() {
+        const selectedCartId = goToCartButton.dataset.cartId;
+
+        if (selectedCartId) {
+            window.location.href = `/cart/${selectedCartId}`;
+        }
+        });
+    });
+
+    function resetForm() {
+        window.location.href = "http://localhost:8080/";
+    }
+</script>

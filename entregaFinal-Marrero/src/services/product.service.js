@@ -15,7 +15,7 @@ export class ProductService {
                 filterOptions = { category: { $regex: query, $options: 'i' } };
             }
             
-            //Filter using stock == true or stock == false
+            //Filter using stock == true or stock ==
             if (stock === 'true') {
                filterOptions.stock = { $gt: 0 };
             } else if (stock === 'false') {

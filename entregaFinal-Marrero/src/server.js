@@ -38,7 +38,6 @@ mongoose.connect(uri)
 
 
 //Configuracion de handlebars
-
 app.engine("hbs", handlebars.engine({
     extname: ".hbs",
     defaultLayout: "main.hbs",
