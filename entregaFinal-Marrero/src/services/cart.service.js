@@ -64,7 +64,6 @@ export class CartService {
             }
 
             const cartProduct = cart.products.find(p => p.product.toString() === pid);
-            console.log(cartProduct.quantity)
             const quantityDifference = quantity + cartProduct.quantity;
 
             
