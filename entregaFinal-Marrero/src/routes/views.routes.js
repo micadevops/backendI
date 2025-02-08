@@ -27,7 +27,12 @@ viewsRouter.get("/", async (req, res) => {
             products: cart.products
         }));
 
-        res.render("home", { products, carts: simplifiedCarts });
+        res.render("home", { 
+            products, 
+            prevLink: products.prevLink,
+            nextLink: products.nextLink,
+            carts: simplifiedCarts 
+        });
     } catch (error) {
         res.status(500).send("Error fetching products: " + error.message);
     }

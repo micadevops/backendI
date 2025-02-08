@@ -1,6 +1,7 @@
 <div class="page-header">
     <h1>Cart {{cart._id}}</h1>
 </div>
+<button class="btn-custom" onclick="redirectToLocalhost()">Back to product catalog</button>
 {{#if cart.products.length}}
     <table border="1">
         <thead>
@@ -16,7 +17,7 @@
         <tbody>
             {{#each cart.products}}
                 <tr>
-                     <td>{{this._id}}</td>
+                    <td>{{this._id}}</td>
                     <td>{{this.product.title}}</td>
                     <td>{{this.product.description}}</td>
                     <td>{{this.product.price}}</td>
@@ -27,5 +28,10 @@
         </tbody>
     </table>
 {{else}}
-    <p>No hay productos en este carrito.</p>
+    <p>No products in the cart.</p>
 {{/if}}
+  <script>
+        function redirectToLocalhost() {
+            window.location.href = 'http://localhost:8080';
+        }
+    </script>
