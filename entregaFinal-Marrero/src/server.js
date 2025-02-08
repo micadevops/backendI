@@ -61,7 +61,12 @@ const httpServer = app.listen(PORT, () => {
 
 export const io = new Server(httpServer);
 
-io.on("connection", (socket) => {
+const productService = new ProductService();
+
+io.on("connection", async (socket) => {
     console.log("Nuevo cliente conectado", socket.id);
-    socket.emit("init", productService.products);
+    
+    const products = await productService.getAll();
+    
+    socket.emit("init", products);
 });

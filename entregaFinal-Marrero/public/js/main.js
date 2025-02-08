@@ -2,14 +2,14 @@ const socket = io();
 
 const productTable = document.getElementById("product-table");
 
-socket.on("init", (products) => {
+socket.on("init", (data) => {
     productTable.innerHTML = "";
-    products.forEach((product) => {
+
+    data.payload.forEach((product) => {
         const row = createProductRow(product);
         productTable.appendChild(row);
     });
 });
-
 
 socket.on("productCreated", (product) => {
     const row = createProductRow(product);
