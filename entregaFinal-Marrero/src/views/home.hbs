@@ -18,7 +18,7 @@
             <label for="page">Page:</label>
             <input type="number" name="page" id="page" value="{{page}}">
         </div>
-        <!-- Selector para 'sort' con estilos explícitos -->
+        <!-- Selector para 'sort'-->
         <div class="input-field">
             <label for="sort">Order by price:</label>
             <select name="sort" id="sort" style="display: inline-block; padding: 5px; margin-left: 5px;">
@@ -78,7 +78,6 @@
             <td>{{this.category}}</td>
             <td>{{this.stock}}</td>
             <td>
-                <!-- Formulario para enviar el carrito y el producto -->
                 <form method="POST" class="add-to-cart-form">
                     <input type="hidden" name="productId" value="{{this._id}}">
                     <button type="submit" class="agregar-btn">Add to cart</button>
@@ -102,16 +101,18 @@
 
                 const selectedCartId = cartSelect.value;
                 if (!selectedCartId) {
-                    alert('¡Por favor, selecciona un carrito antes de agregar el producto!');
+                Swal.fire({
+                    icon: 'error',
+                    title: '¡Error!',
+                    text: 'Please select a cart before adding a product.',
+                });
                     return;
                 }
 
                 const productId = form.querySelector('input[name="productId"]').value;
                 const formAction = `/api/carts/${selectedCartId}/product/${productId}`;
 
-                console.log("Enviando solicitud a:", formAction);
-                console.log("Cart ID:", selectedCartId);
-                console.log("Product ID:", productId);
+
 
                 try {
                     const response = await fetch(formAction, {
@@ -119,13 +120,21 @@
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({ quantity: 1 }) // Puedes cambiar esto según tu API
                     });
 
                     if (response.ok) {
-                        alert(`El producto ${productId} fue agregado al carrito ${selectedCartId} con éxito!`);
+                        Swal.fire({
+                        title: "Good job!",
+                        text: `Product ${productId} was added to cart ${selectedCartId} successfully!`,
+                        icon: "success"
+                        });
+                                            
                     } else {
-                        alert('Hubo un error al agregar el producto. Inténtalo de nuevo.');
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Something went wrong when we try to add the product!",
+                        });
                     }
                 } catch (error) {
                     console.error("Error al enviar la solicitud:", error);
@@ -159,7 +168,5 @@
         });
     });
 
-    function resetForm() {
-        window.location.href = "http://localhost:8080/";
-    }
+  
 </script>

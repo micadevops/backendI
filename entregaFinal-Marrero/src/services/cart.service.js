@@ -1,5 +1,6 @@
 import { ProductService } from "./product.service.js";
 import { cartModel } from "../db/models/cart.model.js";
+import { productModel } from "../db/models/product.model.js";
 
 export class CartService {
     constructor() {
@@ -94,7 +95,8 @@ export class CartService {
             if (productId.stock < 1) {
                 throw new Error(`Product ${pid} is out of stock`);
             }
-    
+
+
             const cart = await cartModel.findOneAndUpdate(
                 { _id: id, 'products.product': pid },
                 { 
@@ -120,7 +122,13 @@ export class CartService {
                     { new: true }
                 );
             }
-        
+    
+            const updatedProductStock = await productModel.findOneAndUpdate(
+                { _id: pid, stock: { $gt: 0 } },
+                { $inc: { stock: -1 } }, 
+                { new: true }
+            );
+            
             return cart;
 
             } catch (error) {
