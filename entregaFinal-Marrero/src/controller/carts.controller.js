@@ -71,7 +71,7 @@ export class CartsController {
             const updatedCart = await this.cartService.updateQuantityProduct(cid, pid, quantity);
     
             if (!updatedCart) {
-                return res.status(404).json({ message: `Product with ID ${pid} not found in cart ${cid}.` });
+                return res.status(404).json({ message: `Product out of stock    ` });
             }
     
             return res.status(200).json({

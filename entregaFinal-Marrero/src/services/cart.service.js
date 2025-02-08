@@ -54,13 +54,24 @@ export class CartService {
             }
     
             const product = await this.productService.getById(pid);
+
             if (!product) {
                 throw new Error(`Product with ID ${pid} not found`);
             }
-    
+
+            if (product.stock < quantity) {
+                throw new Error(`Product ${pid} is out of stock`);
+            }
+
+            const cartProduct = cart.products.find(p => p.product.toString() === pid);
+            console.log(cartProduct.quantity)
+            const quantityDifference = quantity + cartProduct.quantity;
+
+            
+
             const updatedCart = await cartModel.findOneAndUpdate(
                 { _id: id, "products.product": pid },
-                { $set: { "products.$.quantity": quantity } },
+                { $set: { "products.$.quantity": quantityDifference } },
                 { new: true }
             );
     
@@ -68,6 +79,12 @@ export class CartService {
                 throw new Error(`Product with ID ${pid} is not in the cart`);
             }
     
+            const updatedProductStock = await productModel.findOneAndUpdate(
+                { _id: pid, stock: { $gt: 0 } },
+                { $inc: { stock: - quantity } }, 
+                { new: true }
+            );
+
             return updatedCart;
     
         } catch (error) {
@@ -149,7 +166,7 @@ export class CartService {
                     upsert: false 
                 }
             );
-            //TODO: revisar para que mande una alerta cunado ya no quedan mas productos, y no me deje seguir borrando
+            
             const updatedCart = await cartModel.findOneAndUpdate(
                 { _id: id },
                 { 
