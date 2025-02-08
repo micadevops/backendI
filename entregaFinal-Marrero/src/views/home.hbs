@@ -1,42 +1,44 @@
-<h1>HOME PAGE</h1>
-<form action="/" method="GET">
-    <div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
+<div class="page-header">
+    <h1>Product Catalog</h1>
+</div>
+<form action="/" method="GET" class="content-section">
+    <div class="filters-grid">
         <!-- Input para 'limit' -->
-        <div>
+        <div class="input-field">
             <label for="limit">Limit of products:</label>
             <input type="number" name="limit" id="limit" value="{{limit}}">
         </div>
 
-        <div>
-            <label for="query">Buscar por categoria:</label>
+        <div class="input-field">
+            <label for="query">Search by category</label>
             <input type="string" name="query" id="query" value="{{query}}">
         </div>
         <!-- Input para 'page' -->
-        <div>
+        <div class="input-field">
             <label for="page">Page:</label>
             <input type="number" name="page" id="page" value="{{page}}">
         </div>
         <!-- Selector para 'sort' con estilos explícitos -->
-        <div>
-            <label for="sort">Ordenar por precio:</label>
+        <div class="input-field">
+            <label for="sort">Order by price:</label>
             <select name="sort" id="sort" style="display: inline-block; padding: 5px; margin-left: 5px;">
-                <option value="asc" {{#if isAsc}}selected{{/if}}>Ascendente</option>
-                <option value="desc" {{#if isDesc}}selected{{/if}}>Descendente</option>
+                <option value="asc" {{#if isAsc}}selected{{/if}}>Ascendant</option>
+                <option value="desc" {{#if isDesc}}selected{{/if}}>Descendant</option>
             </select>
         </div>
-        <div>
+
+        <div class="input-field">
             <label for="stock">Stock:</label>
             <select name="stock" id="stock" style="display: inline-block; padding: 5px; margin-left: 5px;">
                 <option value="true" {{#if isTrue}}selected{{/if}}>True</option>
                 <option value="false" {{#if isFalse}}selected{{/if}}>False</option>
             </select>
-
-        {{!-- <div>
-            <button type="button" onclick="resetForm()">Restablecer valores</button>
-        <!-- Botón de aplicación -->
-        <div> --}}
-            <button type="submit">Aplicar</button>
         </div>
+
+        <div class="actions-container">
+            <button type="submit" class="btn-custom">Apply</button>
+        </div>
+
     </div>
 </form>
 
@@ -44,12 +46,12 @@
 <div>
     <label for="carts">Carts:</label>
     <select id="carts" style="display: inline-block; padding: 5px; margin-left: 5px;">
-        <option value="">--Selecciona un carrito--</option>
+        <option value="">--Select a cart--</option>
         {{#each carts}}
             <option value="{{this._id}}">{{this._id}}</option>
         {{/each}}
     </select>
-    <button id="go-to-cart" style="display: none; padding: 5px; margin-left: 5px;">Ir al carrito</button>
+    <button id="go-to-cart" class="btn-custom">View Cart</button>
 
 </div>
 
@@ -79,7 +81,7 @@
                 <!-- Formulario para enviar el carrito y el producto -->
                 <form method="POST" class="add-to-cart-form">
                     <input type="hidden" name="productId" value="{{this._id}}">
-                    <button type="submit" class="agregar-btn">Agregar al carrito</button>
+                    <button type="submit" class="agregar-btn">Add to cart</button>
                 </form>
             </td>
 
